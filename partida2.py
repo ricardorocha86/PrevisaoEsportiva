@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 import random
 import time
-import seaborn as sns
-import matplotlib.pyplot as plt
+#import seaborn as sns
+#import matplotlib.pyplot as plt
 from scipy.stats import poisson
 
 dados_variaveis = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos')
@@ -139,24 +139,9 @@ if True:
 	def aux(x):
 		return f'{str(round(100*x,2))}%'
 
-	#st.table(matriz.applymap(aux))
+	st.table(matriz.applymap(aux))
  
-
-
 	
-	fig, ax = plt.subplots()
-	sns.heatmap(matriz.reset_index(drop=True), ax=ax, cmap = 'Blues', annot = matriz , fmt=".2f", xticklabels = lista07, yticklabels = lista07) 
-	ax.tick_params(axis='both', which='major', labelsize=10, labelbottom = False, bottom=False, top = True, labeltop=True )
-	ax.xaxis.set_label_position('top')
-	ax.set_xlabel('Gols ' + selecao2, fontsize=15)	
-	ax.set_ylabel('Gols ' + selecao1, fontsize=15)	
-	ax.set_xticklabels(ax.get_xticklabels(), rotation = 0, fontsize = 8, color = 'gray')
-	ax.set_yticklabels(ax.get_yticklabels(), rotation = 0, fontsize = 8, color = 'gray')
-
-
-	st.markdown("<h2 style='text-align: center; color: #0f54c9; font-size: 40px;'> Probabilidades dos Placares ⚽<br>  </h1>", unsafe_allow_html=True) 
-	st.write(fig)
-
 	st.markdown('---')
 
 	placar = np.unravel_index(np.argmax(matriz, axis=None), matriz.shape) 
