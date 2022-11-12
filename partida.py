@@ -1,5 +1,4 @@
-import streamlit as st 
-import st_aggrid as stg 
+import streamlit as st  
 import pandas as pd
 import numpy as np
 import random
