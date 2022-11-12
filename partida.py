@@ -1,4 +1,5 @@
 import streamlit as st 
+import st_aggrid as stg 
 import pandas as pd
 import numpy as np
 import random
@@ -15,6 +16,7 @@ st.set_page_config(
         'About': 'https://www.previsaoesportiva.com.br', 
     }
 )
+
 dados_variaveis = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos')
 fifa = dados_variaveis['Ranking Point']
 fifa.index = dados_variaveis['Seleção']
@@ -110,23 +112,30 @@ def Jogo(sele1, sele2):
 listaselecoes = dados_variaveis['Seleção'].tolist()
 listaselecoes2 = listaselecoes.copy()
 
-
 ######## COMEÇO DO APP
-a1, a2 = st.columns([1,4])
-a1.image('previsaoesportivalogo.png', width = 200)
-a2.markdown("<h2 style='text-align: right; color: #5C061E; font-size: 32px;'>Copa do Mundo Qatar 2022 🏆  </h1>", unsafe_allow_html=True)
-st.markdown('---')
-st.markdown("<h2 style='text-align: center; color: #0f54c9; font-size: 40px;'>Probabilidades dos Jogos ⚽<br>  </h1>", unsafe_allow_html=True)
 
-st.markdown('---')
-j1, j2 = st.columns (2)
-selecao1 = j1.selectbox('--- Escolha a primeira Seleção ---', listaselecoes) 
-listaselecoes2.remove(selecao1)
-selecao2 = j2.selectbox('--- Escolha a segunda Seleção ---', listaselecoes2, index = 1)
+paginas = ['Principal', 'Tabelas']
+pagina = st.sidebar.radio('Selecione a página', paginas)
+
+
+
+if pagina == 'Principal':
+
+	a1, a2 = st.columns([1,4])
+	a1.image('previsaoesportivalogo.png', width = 200)
+	a2.markdown("<h2 style='text-align: right; color: #5C061E; font-size: 32px;'>Copa do Mundo Qatar 2022 🏆  </h1>", unsafe_allow_html=True)
+	st.markdown('---')
+	st.markdown("<h2 style='text-align: center; color: #0f54c9; font-size: 40px;'>Probabilidades dos Jogos ⚽<br>  </h1>", unsafe_allow_html=True)
+
+	st.markdown('---')
+	j1, j2 = st.columns (2)
+	selecao1 = j1.selectbox('--- Escolha a primeira Seleção ---', listaselecoes) 
+	listaselecoes2.remove(selecao1)
+	selecao2 = j2.selectbox('--- Escolha a segunda Seleção ---', listaselecoes2, index = 1)
+	 
+	st.markdown('---')
  
-st.markdown('---')
- 
-if True:
+
 
 	jogo = ProbabilidadesPartida(selecao1, selecao2)
 	prob = jogo['probabilidades']
@@ -191,3 +200,34 @@ if True:
 	#bandeira1, nome1, prob, empate, prob, nome2, bandeira2
 	#matriz de probabilidades do jogo
 	#placar mais provável
+
+if pagina == 'Tabelas':
+	dados1 = pd.read_excel('dados/outputSimulaçõesCopa(n=1000000).xlsx') 
+	dados2 = pd.read_excel('dados/outputJogadoresArtilharia(n=1000000).xlsx') 
+	dados3 = pd.read_excel('dados/outputFinaisMaisProvaveis(n=1000000).xlsx') 
+	dados4 = pd.read_excel('dados/outputProbPorEtapa(n=1000000).xlsx') 
+	dados5 = pd.read_excel('dados/outputTabelaJogosPROBS.xlsx') 
+
+
+
+	tab1, tab2, tab3, tab4, tab5 = st.tabs(["Simulações da Copa", "Artilheiro", "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos'])
+
+	with tab1:
+		st.header("Simulações da Copa") 
+		st.write(dados1, height = 900)
+
+	with tab2:  
+		st.header("Previsões do Artilheiro")  
+		st.write(dados2)
+
+	with tab3:  
+		st.header("Finais Mais Prováveis")  
+		st.write(dados3) 
+
+	with tab4:  
+		st.header("Probabilidades por Etapa")  
+		st.write(dados4) 
+
+	with tab5:  
+		st.header("Tabela de Jogos")  
+		st.write(dados5) 
