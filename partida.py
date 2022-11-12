@@ -201,11 +201,11 @@ if pagina == 'Principal':
 	#placar mais provável
 
 if pagina == 'Tabelas':
-	dados1 = pd.read_excel('dados/outputSimulaçõesCopa(n=1000000).xlsx') 
-	dados2 = pd.read_excel('dados/outputJogadoresArtilharia(n=1000000).xlsx') 
-	dados3 = pd.read_excel('dados/outputFinaisMaisProvaveis(n=1000000).xlsx') 
-	dados4 = pd.read_excel('dados/outputProbPorEtapa(n=1000000).xlsx') 
-	dados5 = pd.read_excel('dados/outputTabelaJogosPROBS.xlsx') 
+	dados1 = pd.read_excel('dados/outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
+	dados2 = pd.read_excel('dados/outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+	dados3 = pd.read_excel('dados/outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
+	dados4 = pd.read_excel('dados/outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
+	dados5 = pd.read_excel('dados/outputTabelaJogosPROBS.xlsx', index_col=0) 
 
 
 
