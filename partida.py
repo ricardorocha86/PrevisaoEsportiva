@@ -200,7 +200,8 @@ if pagina == 'Principal':
 	#matriz de probabilidades do jogo
 	#placar mais provável
 
-if pagina == 'Tabelas':
+if pagina == 'Tabelas': 
+	dados0 = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos', index_col=0) 
 	dados1 = pd.read_excel('dados/outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
 	dados2 = pd.read_excel('dados/outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
 	dados3 = pd.read_excel('dados/outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
@@ -209,7 +210,11 @@ if pagina == 'Tabelas':
 
 
 
-	tab1, tab2, tab3, tab4, tab5 = st.tabs(["Simulações da Copa", "Artilheiro", "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos'])
+	tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(['Dados das Seleções', "Simulações da Copa", "Artilheiro", "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos'])
+
+	with tab0:
+		st.header("Simulações da Copa") 
+		st.write(dados0, height = 900)
 
 	with tab1:
 		st.header("Simulações da Copa") 
@@ -229,4 +234,4 @@ if pagina == 'Tabelas':
 
 	with tab5:  
 		st.header("Tabela de Jogos")  
-		st.write(dados5) 
+		st.write(dados5[['grupo', 'seleção1', 'probV', 'probE', 'probD','seleção2']])  
