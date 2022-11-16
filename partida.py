@@ -17,27 +17,61 @@ st.set_page_config(
 )
 
 dados_variaveis = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos')
+# fifa = dados_variaveis['Ranking Point']
+# fifa.index = dados_variaveis['Seleção']
+
+# a, b = min(fifa), max(fifa) 
+# fa, fb = 0.2, 1 
+# b1 = (fb - fa)/(b-a) 
+# b0 = fb - b*b1
+# fatorRanking = b0 + b1*fifa
+
+# fatorRanking.sort_values(ascending = False)
+
+# k = 0.1
+# fatorMercado = k*dados_variaveis['Market Value']/max(dados_variaveis['Market Value']) + (1 - k)
+# fatorConf = k*dados_variaveis['Factor_COF']/max(dados_variaveis['Factor_COF']) + (1 - k)
+# fatorCopa = k*dados_variaveis['Copas']/max(dados_variaveis['Copas']) + (1 - k)
+# fatorMercado.index = dados_variaveis['Seleção']
+# fatorConf.index = dados_variaveis['Seleção']
+# fatorCopa.index = dados_variaveis['Seleção']
+
+# forca = fatorRanking * fatorMercado * fatorConf * fatorCopa
+# forca.sort_values(ascending = False)
+
 fifa = dados_variaveis['Ranking Point']
 fifa.index = dados_variaveis['Seleção']
 
 a, b = min(fifa), max(fifa) 
-fa, fb = 0.2, 1 
+fa, fb = 0.05, 1 
 b1 = (fb - fa)/(b-a) 
 b0 = fb - b*b1
-fatorRanking = b0 + b1*fifa
+fatorFifa = b0 + b1*fifa 
 
-fatorRanking.sort_values(ascending = False)
+fatorFifa.sort_values(ascending = False)
 
-k = 0.1
-fatorMercado = k*dados_variaveis['Market Value']/max(dados_variaveis['Market Value']) + (1 - k)
-fatorConf = k*dados_variaveis['Factor_COF']/max(dados_variaveis['Factor_COF']) + (1 - k)
-fatorCopa = k*dados_variaveis['Copas']/max(dados_variaveis['Copas']) + (1 - k)
-fatorMercado.index = dados_variaveis['Seleção']
-fatorConf.index = dados_variaveis['Seleção']
-fatorCopa.index = dados_variaveis['Seleção']
+fifa = dados_variaveis['RankingELO']
+fifa.index = dados_variaveis['Seleção']
 
-forca = fatorRanking * fatorMercado * fatorConf * fatorCopa
-forca.sort_values(ascending = False)
+a, b = min(fifa), max(fifa) 
+fa, fb = 0.05, 1 
+b1 = (fb - fa)/(b-a) 
+b0 = fb - b*b1
+fatorELO = b0 + b1*fifa 
+
+fatorELO.sort_values(ascending = False)
+
+def Fator(dados, var, K):
+    res = K * (dados[var] - min(dados[var]))/(max(dados[var]) - min(dados[var])) + (1 - K)
+    res.index = dados_variaveis['Seleção']
+    return res
+
+fatorMercado = Fator(dados_variaveis, 'Market Value', K = 0.05) 
+fatorATQ = Fator(dados_variaveis, 'ATAQUE', K = 0.05) 
+fatorDEF = 1 - Fator(dados_variaveis, 'DEFESA', K = 0.05) + 0.95
+fatorCopa = Fator(dados_variaveis, 'Copas', K = 0.05)
+#fatorTendencia = Fator(dados_variaveis, 'TendenciaELO', K = 0.05)
+forca = (0.5*fatorFifa + 0.5*fatorELO) * (fatorMercado * fatorDEF * fatorATQ )
 
 lista07 = ['0', '1', '2', '3', '4', '5', '6', '7+']
 
@@ -109,6 +143,7 @@ def Jogo(sele1, sele2):
 
 
 listaselecoes = dados_variaveis['Seleção'].tolist()
+listaselecoes.sort()
 listaselecoes2 = listaselecoes.copy()
 
 ######## COMEÇO DO APP
