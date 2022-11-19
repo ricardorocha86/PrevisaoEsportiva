@@ -88,7 +88,7 @@ def MediasPoisson(sele1, sele2):
 	forca1 = forca[sele1]
 	forca2 = forca[sele2]
 	fator = forca1/(forca1 + forca2)
-	mgols = 2.5
+	mgols = 2.75
 	l1 = mgols*fator
 	l2 = mgols - l1
 	return [fator, l1, l2]
@@ -142,7 +142,7 @@ def Jogo(sele1, sele2):
 	return [gols1, gols2, saldo1, saldo2, pontos1, pontos2, result, placar]
 
 
-listaselecoes = dados_variaveis['Seleção'].tolist()
+listaselecoes = dados_variaveis['Seleção'].tolist()  
 listaselecoes.sort()
 listaselecoes2 = listaselecoes.copy()
 
@@ -162,6 +162,9 @@ if pagina == 'Principal':
 	st.markdown("<h2 style='text-align: center; color: #0f54c9; font-size: 40px;'>Probabilidades dos Jogos ⚽<br>  </h1>", unsafe_allow_html=True)
 
 	st.markdown('---')
+	tipojogo = st.radio('Escolha o tipo de jogo', ['Jogo da Fase de Grupos', 'Jogo do Mata-Mata'])
+	st.markdown('---')
+
 	j1, j2 = st.columns (2)
 	selecao1 = j1.selectbox('--- Escolha a primeira Seleção ---', listaselecoes) 
 	listaselecoes2.remove(selecao1)
@@ -174,16 +177,33 @@ if pagina == 'Principal':
 	jogo = ProbabilidadesPartida(selecao1, selecao2)
 	prob = jogo['probabilidades']
 	matriz = jogo['matriz']
+
  
-	col1, col2, col3, col4, col5 = st.columns(5)
-	col1.image(dados_variaveis[dados_variaveis['Seleção'] == selecao1]['LinkBandeira2'].iloc[0]) 
-	col2.markdown(f"<h5 style='text-align: center; color: #1a1a1a; font-weight: bold; font-size: 25px;'>{selecao1}<br>  </h1>", unsafe_allow_html=True)
-	col2.markdown(f"<h2 style='text-align: center; color: #0f54c9; font-weight: bold; font-size: 50px;'>{prob[0]}<br>  </h1>", unsafe_allow_html=True)
-	col3.markdown(f"<h2 style='text-align: center; color: #6a6a6b; font-weight: 100; font-size: 15px;'>Empate<br>  </h1>", unsafe_allow_html=True)
-	col3.markdown(f"<h2 style='text-align: center; color: #6a6a6b;                    font-size: 30px;'>{prob[1]}<br>  </h1>", unsafe_allow_html=True)
-	col4.markdown(f"<h5 style='text-align: center; color: #1a1a1a; font-weight: bold; font-size: 25px;'>{selecao2}<br>  </h1>", unsafe_allow_html=True) 
-	col4.markdown(f"<h2 style='text-align: center; color: #0f54c9; font-weight: bold; font-size: 50px;'>{prob[2]}<br>  </h1>", unsafe_allow_html=True) 
-	col5.image(dados_variaveis[dados_variaveis['Seleção'] == selecao2]['LinkBandeira2'].iloc[0])
+	if tipojogo == 'Jogo da Fase de Grupos':
+		col1, col2, col3, col4, col5 = st.columns(5)
+		col1.image(dados_variaveis[dados_variaveis['Seleção'] == selecao1]['LinkBandeira2'].iloc[0]) 
+		col2.markdown(f"<h5 style='text-align: center; color: #1a1a1a; font-weight: bold; font-size: 25px;'>{selecao1}<br>  </h1>", unsafe_allow_html=True)
+		col2.markdown(f"<h2 style='text-align: center; color: #0f54c9; font-weight: bold; font-size: 50px;'>{prob[0]}<br>  </h1>", unsafe_allow_html=True)
+		col3.markdown(f"<h2 style='text-align: center; color: #6a6a6b; font-weight: 100; font-size: 15px;'>Empate<br>  </h1>", unsafe_allow_html=True)
+		col3.markdown(f"<h2 style='text-align: center; color: #6a6a6b;                    font-size: 30px;'>{prob[1]}<br>  </h1>", unsafe_allow_html=True)
+		col4.markdown(f"<h5 style='text-align: center; color: #1a1a1a; font-weight: bold; font-size: 25px;'>{selecao2}<br>  </h1>", unsafe_allow_html=True) 
+		col4.markdown(f"<h2 style='text-align: center; color: #0f54c9; font-weight: bold; font-size: 50px;'>{prob[2]}<br>  </h1>", unsafe_allow_html=True) 
+		col5.image(dados_variaveis[dados_variaveis['Seleção'] == selecao2]['LinkBandeira2'].iloc[0])
+ 
+	if tipojogo == 'Jogo do Mata-Mata':
+		col1, col2, col3, col4, col5 = st.columns(5)
+		col1.image(dados_variaveis[dados_variaveis['Seleção'] == selecao1]['LinkBandeira2'].iloc[0]) 
+		col2.markdown(f"<h5 style='text-align: center; color: #1a1a1a; font-weight: bold; font-size: 25px;'>{selecao1}<br>  </h1>", unsafe_allow_html=True)
+		aux1 = round(float(prob[0][:-1])+float(prob[1][:-1])/2, 1)
+		aux2 = str(aux1) + '%' 
+		col2.markdown(f"<h2 style='text-align: center; color: #0f54c9; font-weight: bold; font-size: 50px;'>{aux2}<br>  </h1>", unsafe_allow_html=True)
+		col3.markdown(f"<h2 style='text-align: center; color: #6a6a6b; font-weight: 100; font-size: 15px;'> <br>  </h1>", unsafe_allow_html=True)
+		col3.markdown(f"<h2 style='text-align: center; color: #6a6a6b;                    font-size: 30px;'>vs<br>  </h1>", unsafe_allow_html=True)
+		col4.markdown(f"<h5 style='text-align: center; color: #1a1a1a; font-weight: bold; font-size: 25px;'>{selecao2}<br>  </h1>", unsafe_allow_html=True) 
+		aux3 = round(100 - aux1, 1)
+		aux4 = str(aux3) + '%' 
+		col4.markdown(f"<h2 style='text-align: center; color: #0f54c9; font-weight: bold; font-size: 50px;'>{aux4}<br>  </h1>", unsafe_allow_html=True) 
+		col5.image(dados_variaveis[dados_variaveis['Seleção'] == selecao2]['LinkBandeira2'].iloc[0])
 
 	st.markdown('---')
  
