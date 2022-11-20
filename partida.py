@@ -268,7 +268,7 @@ if pagina == 'Tabelas':
 	tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(['Dados das Seleções', "Simulações da Copa", "Artilheiro", "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos'])
 
 	with tab0:
-		st.header("Simulações da Copa") 
+		st.header("Dados das Seleções") 
 		st.write(dados0, height = 900)
 
 	with tab1:
