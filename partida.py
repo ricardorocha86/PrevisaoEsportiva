@@ -17,28 +17,6 @@ st.set_page_config(
 )
 
 dados_variaveis = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos')
-# fifa = dados_variaveis['Ranking Point']
-# fifa.index = dados_variaveis['Seleção']
-
-# a, b = min(fifa), max(fifa) 
-# fa, fb = 0.2, 1 
-# b1 = (fb - fa)/(b-a) 
-# b0 = fb - b*b1
-# fatorRanking = b0 + b1*fifa
-
-# fatorRanking.sort_values(ascending = False)
-
-# k = 0.1
-# fatorMercado = k*dados_variaveis['Market Value']/max(dados_variaveis['Market Value']) + (1 - k)
-# fatorConf = k*dados_variaveis['Factor_COF']/max(dados_variaveis['Factor_COF']) + (1 - k)
-# fatorCopa = k*dados_variaveis['Copas']/max(dados_variaveis['Copas']) + (1 - k)
-# fatorMercado.index = dados_variaveis['Seleção']
-# fatorConf.index = dados_variaveis['Seleção']
-# fatorCopa.index = dados_variaveis['Seleção']
-
-# forca = fatorRanking * fatorMercado * fatorConf * fatorCopa
-# forca.sort_values(ascending = False)
-
 fifa = dados_variaveis['Ranking Point']
 fifa.index = dados_variaveis['Seleção']
 
@@ -66,12 +44,20 @@ def Fator(dados, var, K):
     res.index = dados_variaveis['Seleção']
     return res
 
-fatorMercado = Fator(dados_variaveis, 'Market Value', K = 0.05) 
+fatorMercado = Fator(dados_variaveis, 'Market Value', K = 0.1) 
 fatorATQ = Fator(dados_variaveis, 'ATAQUE', K = 0.05) 
 fatorDEF = 1 - Fator(dados_variaveis, 'DEFESA', K = 0.05) + 0.95
-fatorCopa = Fator(dados_variaveis, 'Copas', K = 0.05)
-#fatorTendencia = Fator(dados_variaveis, 'TendenciaELO', K = 0.05)
-forca = (0.5*fatorFifa + 0.5*fatorELO) * (fatorMercado * fatorDEF * fatorATQ )
+fatorCopa = Fator(dados_variaveis, 'Copas2', K = 0.1)
+fatorTendencia = Fator(dados_variaveis, 'Saldo', K = 0.1)
+
+fatores =  (fatorMercado * fatorDEF * fatorATQ * fatorCopa * fatorTendencia)
+
+forca = (0.5*fatorFifa + 0.5*fatorELO) * fatores
+forca = forca**(1/1.5)
+forca = forca/max(forca)
+forca = 0.85*(forca - min(forca))/(max(forca) - min(forca)) + 0.15
+forca = forca.sort_values(ascending = False)
+forca 
 
 lista07 = ['0', '1', '2', '3', '4', '5', '6', '7+']
 
@@ -256,37 +242,77 @@ if pagina == 'Principal':
 	#placar mais provável
 
 if pagina == 'Tabelas': 
-	dados0 = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos', index_col=0) 
-	dados1 = pd.read_excel('dados/outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
-	dados2 = pd.read_excel('dados/outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
-	dados3 = pd.read_excel('dados/outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
-	dados4 = pd.read_excel('dados/outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
-	dados5 = pd.read_excel('dados/outputTabelaJogosPROBS.xlsx', index_col=0) 
+
+	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada']
+	a = st.radio('Selecione a Atualização', atualizacoes, index = 1)
+
+	if a == 'Início da Copa':
+		dados0 = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos', index_col=0) 
+		dados1 = pd.read_excel('dados/outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados3 = pd.read_excel('dados/outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
+		dados5 = pd.read_excel('dados/outputTabelaJogosPROBS.xlsx', index_col=0) 
+
+		tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(['Dados das Seleções', "Simulações da Copa", "Artilheiro", "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos'])
+
+		with tab0:
+			st.header("Dados das Seleções") 
+			st.write(dados0, height = 900)
+
+		with tab1:
+			st.header("Simulações da Copa") 
+			st.write(dados1, height = 900)
+
+		with tab2:  
+			st.header("Previsões do Artilheiro")  
+			st.write(dados2)
+
+		with tab3:  
+			st.header("Finais Mais Prováveis")  
+			st.write(dados3) 
+
+		with tab4:  
+			st.header("Probabilidades por Etapa")  
+			st.write(dados4) 
+
+		with tab5:  
+			st.header("Tabela de Jogos")  
+			st.write(dados5[['grupo', 'seleção1', 'probV', 'probE', 'probD','seleção2']])  
+
+	if a == 'Pós Primeira Rodada':
+		dados1 = pd.read_excel('dados/R1outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R1outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados3 = pd.read_excel('dados/R1outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R1outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
+		dados5 = pd.read_excel('dados/R1outputTabelaJogosPROBS.xlsx', index_col=0) 
+		dados6 = pd.read_excel('dados/R1outputAvançoPorEtapa.xlsx', index_col=0) 
+
+		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(['Dados das Seleções', "Simulações da Copa", "Artilheiro", "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos'])
+ 
+		with tab1:
+			st.header("Simulações da Copa") 
+			st.write(dados1, height = 900)
+
+		with tab2:  
+			st.header("Previsões do Artilheiro")  
+			st.write(dados2)
+
+		with tab3:  
+			st.header("Finais Mais Prováveis")  
+			st.write(dados3) 
+
+		with tab4:  
+			st.header("Probabilidades por Etapa")  
+			st.write(dados4) 
+
+		with tab5:  
+			st.header("Tabela de Jogos")  
+			st.write(dados5[['grupo', 'seleção1', 'probV', 'probE', 'probD','seleção2']])  
+
+		with tab6:  
+			st.header("Probabilidades de Avanço")  
+			st.write(dados6) 
 
 
 
-	tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(['Dados das Seleções', "Simulações da Copa", "Artilheiro", "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos'])
-
-	with tab0:
-		st.header("Dados das Seleções") 
-		st.write(dados0, height = 900)
-
-	with tab1:
-		st.header("Simulações da Copa") 
-		st.write(dados1, height = 900)
-
-	with tab2:  
-		st.header("Previsões do Artilheiro")  
-		st.write(dados2)
-
-	with tab3:  
-		st.header("Finais Mais Prováveis")  
-		st.write(dados3) 
-
-	with tab4:  
-		st.header("Probabilidades por Etapa")  
-		st.write(dados4) 
-
-	with tab5:  
-		st.header("Tabela de Jogos")  
-		st.write(dados5[['grupo', 'seleção1', 'probV', 'probE', 'probD','seleção2']])  
