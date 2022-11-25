@@ -57,7 +57,7 @@ forca = forca**(1/1.5)
 forca = forca/max(forca)
 forca = 0.85*(forca - min(forca))/(max(forca) - min(forca)) + 0.15
 forca = forca.sort_values(ascending = False)
-forca 
+#forca 
 
 lista07 = ['0', '1', '2', '3', '4', '5', '6', '7+']
 
@@ -282,13 +282,13 @@ if pagina == 'Tabelas':
 
 	if a == 'Pós Primeira Rodada':
 		dados1 = pd.read_excel('dados/R1outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
-		dados2 = pd.read_excel('dados/R1outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
 		dados3 = pd.read_excel('dados/R1outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
 		dados4 = pd.read_excel('dados/R1outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
 		dados5 = pd.read_excel('dados/R1outputTabelaJogosPROBS.xlsx', index_col=0) 
 		dados6 = pd.read_excel('dados/R1outputAvançoPorEtapa.xlsx', index_col=0) 
 
-		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(['Dados das Seleções', "Simulações da Copa", "Artilheiro", "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos'])
+		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
  
 		with tab1:
 			st.header("Simulações da Copa") 
