@@ -53,11 +53,10 @@ fatorTendencia = Fator(dados_variaveis, 'Saldo', K = 0.1)
 fatores =  (fatorMercado * fatorDEF * fatorATQ * fatorCopa * fatorTendencia)
 
 forca = (0.5*fatorFifa + 0.5*fatorELO) * fatores
-forca = forca**(1/1.5)
 forca = forca/max(forca)
-forca = 0.85*(forca - min(forca))/(max(forca) - min(forca)) + 0.15
+forca = 0.7*(forca - min(forca))/(max(forca) - min(forca)) + 0.30
 forca = forca.sort_values(ascending = False)
-#forca 
+forca 
 
 lista07 = ['0', '1', '2', '3', '4', '5', '6', '7+']
 
@@ -244,7 +243,7 @@ if pagina == 'Principal':
 if pagina == 'Tabelas': 
 
 	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada']
-	a = st.radio('Selecione a Atualização', atualizacoes, index = 1)
+	a = st.radio('Selecione a Atualização', atualizacoes, index = 2)
 
 	if a == 'Início da Copa':
 		dados0 = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos', index_col=0) 
@@ -315,4 +314,38 @@ if pagina == 'Tabelas':
 			st.write(dados6) 
 
 
+
+	if a == 'Pós Segunda Rodada':
+		dados1 = pd.read_excel('dados/R2outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R1outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados3 = pd.read_excel('dados/R2outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R2outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
+		dados5 = pd.read_excel('dados/R2outputTabelaJogosPROBS.xlsx', index_col=0) 
+		dados6 = pd.read_excel('dados/R2outputAvançoPorEtapa.xlsx', index_col=0) 
+
+		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
+ 
+		with tab1:
+			st.header("Simulações da Copa") 
+			st.write(dados1, height = 900)
+
+		with tab2:  
+			st.header("Previsões do Artilheiro")  
+			st.write(dados2)
+
+		with tab3:  
+			st.header("Finais Mais Prováveis")  
+			st.write(dados3) 
+
+		with tab4:  
+			st.header("Probabilidades por Etapa")  
+			st.write(dados4) 
+
+		with tab5:  
+			st.header("Tabela de Jogos")  
+			st.write(dados5[['grupo', 'seleção1', 'probV', 'probE', 'probD','seleção2']])  
+
+		with tab6:  
+			st.header("Probabilidades de Avanço")  
+			st.write(dados6) 
 
