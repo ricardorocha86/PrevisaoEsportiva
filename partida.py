@@ -55,8 +55,7 @@ fatores =  (fatorMercado * fatorDEF * fatorATQ * fatorCopa * fatorTendencia)
 forca = (0.5*fatorFifa + 0.5*fatorELO) * fatores
 forca = forca/max(forca)
 forca = 0.7*(forca - min(forca))/(max(forca) - min(forca)) + 0.30
-forca = forca.sort_values(ascending = False)
-forca 
+forca = forca.sort_values(ascending = False) 
 
 lista07 = ['0', '1', '2', '3', '4', '5', '6', '7+']
 
@@ -242,7 +241,7 @@ if pagina == 'Principal':
 
 if pagina == 'Tabelas': 
 
-	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada']
+	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada']
 	a = st.radio('Selecione a Atualização', atualizacoes, index = 2)
 
 	if a == 'Início da Copa':
