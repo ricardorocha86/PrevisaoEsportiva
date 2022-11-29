@@ -316,7 +316,7 @@ if pagina == 'Tabelas':
 
 	if a == 'Pós Segunda Rodada':
 		dados1 = pd.read_excel('dados/R2outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
-		dados2 = pd.read_excel('dados/R1outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R2outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
 		dados3 = pd.read_excel('dados/R2outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
 		dados4 = pd.read_excel('dados/R2outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
 		dados5 = pd.read_excel('dados/R2outputTabelaJogosPROBS.xlsx', index_col=0) 
