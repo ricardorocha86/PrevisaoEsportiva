@@ -72,7 +72,7 @@ def MediasPoisson(sele1, sele2):
 	forca1 = forca[sele1]
 	forca2 = forca[sele2]
 	fator = forca1/(forca1 + forca2)
-	mgols = 2.75
+	mgols = 2.5
 	l1 = mgols*fator
 	l2 = mgols - l1
 	return [fator, l1, l2]
@@ -241,7 +241,7 @@ if pagina == 'Principal':
 
 if pagina == 'Tabelas': 
 
-	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada']
+	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada', 'Fim da Primeira Rodada']
 	a = st.radio('Selecione a Atualização', atualizacoes, index = 2)
 
 	if a == 'Início da Copa':
@@ -343,6 +343,42 @@ if pagina == 'Tabelas':
 		with tab5:  
 			st.header("Tabela de Jogos")  
 			st.write(dados5[['grupo', 'seleção1', 'probV', 'probE', 'probD','seleção2']])  
+
+		with tab6:  
+			st.header("Probabilidades de Avanço")  
+			st.write(dados6) 
+
+
+
+	if a == 'Fim da Primeira Rodada':
+		dados1 = pd.read_excel('dados/R3outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R2outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados3 = pd.read_excel('dados/R3outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R3outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
+		dados5 = pd.read_excel('dados/R3outputTabelaJogosPROBS.xlsx', index_col=0) 
+		dados6 = pd.read_excel('dados/R3outputAvançoPorEtapa.xlsx', index_col=0) 
+
+		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
+ 
+		with tab1:
+			st.header("Simulações da Copa") 
+			st.write(dados1, height = 1200)
+
+		with tab2:  
+			st.header("Previsões do Artilheiro")  
+			st.write(dados2)
+
+		with tab3:  
+			st.header("Finais Mais Prováveis")  
+			st.write(dados3) 
+
+		with tab4:  
+			st.header("Probabilidades por Etapa")  
+			st.write(dados4) 
+
+		with tab5:  
+			st.header("Tabela de Jogos")  
+			st.write('em breve')  
 
 		with tab6:  
 			st.header("Probabilidades de Avanço")  
