@@ -242,7 +242,7 @@ if pagina == 'Principal':
 if pagina == 'Tabelas': 
 
 	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada', 'Fim da Primeira Rodada']
-	a = st.radio('Selecione a Atualização', atualizacoes, index = 2)
+	a = st.radio('Selecione a Atualização', atualizacoes, index = 3)
 
 	if a == 'Início da Copa':
 		dados0 = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos', index_col=0) 
