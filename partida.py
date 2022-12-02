@@ -355,7 +355,7 @@ if pagina == 'Tabelas':
 		dados2 = pd.read_excel('dados/R2outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
 		dados3 = pd.read_excel('dados/R3outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
 		dados4 = pd.read_excel('dados/R3outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
-		dados5 = pd.read_excel('dados/R3outputTabelaJogosPROBS.xlsx', index_col=0) 
+		#dados5 = pd.read_excel('dados/R3outputTabelaJogosPROBS.xlsx', index_col=0) 
 		dados6 = pd.read_excel('dados/R3outputAvançoPorEtapa.xlsx', index_col=0) 
 
 		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
