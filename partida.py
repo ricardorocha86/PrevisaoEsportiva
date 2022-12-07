@@ -241,8 +241,8 @@ if pagina == 'Principal':
 
 if pagina == 'Tabelas': 
 
-	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada', 'Fim da Primeira Rodada']
-	a = st.radio('Selecione a Atualização', atualizacoes, index = 3)
+	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada', 'Fim da Primeira Rodada','Fim das Oitavas']
+	a = st.radio('Selecione a Atualização', atualizacoes, index = 4)
 
 	if a == 'Início da Copa':
 		dados0 = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos', index_col=0) 
@@ -384,3 +384,36 @@ if pagina == 'Tabelas':
 			st.header("Probabilidades de Avanço")  
 			st.write(dados6) 
 
+if a == 'Fim das Oitavas':
+		dados1 = pd.read_excel('dados/R4outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R2outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados3 = pd.read_excel('dados/R4outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R4outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
+		#dados5 = pd.read_excel('dados/R3outputTabelaJogosPROBS.xlsx', index_col=0) 
+		dados6 = pd.read_excel('dados/R4outputAvançoPorEtapa.xlsx', index_col=0) 
+
+		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
+ 
+		with tab1:
+			st.header("Simulações da Copa") 
+			st.write(dados1, height = 1200)
+
+		with tab2:  
+			st.header("Previsões do Artilheiro")  
+			st.write("Em Breve")
+
+		with tab3:  
+			st.header("Finais Mais Prováveis")  
+			st.write(dados3) 
+
+		with tab4:  
+			st.header("Probabilidades por Etapa")  
+			st.write(dados4) 
+
+		with tab5:  
+			st.header("Tabela de Jogos")  
+			st.write('em breve')  
+
+		with tab6:  
+			st.header("Probabilidades de Avanço")  
+			st.write(dados6) 
