@@ -241,8 +241,8 @@ if pagina == 'Principal':
 
 if pagina == 'Tabelas': 
 
-	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada', 'Fim da Primeira Rodada','Fim das Oitavas']
-	a = st.radio('Selecione a Atualização', atualizacoes, index = 4)
+	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada', 'Fim da Primeira Rodada','Fim das Oitavas', 'Fim das Quartas']
+	a = st.radio('Selecione a Atualização', atualizacoes, index = 5)
 
 	if a == 'Início da Copa':
 		dados0 = pd.read_excel('dados_previsao_esportiva.xlsx', sheet_name ='grupos', index_col=0) 
@@ -378,7 +378,7 @@ if pagina == 'Tabelas':
 
 		with tab5:  
 			st.header("Tabela de Jogos")  
-			st.write('em breve')  
+			st.write('não se aplica')  
 
 		with tab6:  
 			st.header("Probabilidades de Avanço")  
@@ -412,7 +412,41 @@ if a == 'Fim das Oitavas':
 
 		with tab5:  
 			st.header("Tabela de Jogos")  
-			st.write('em breve')  
+			st.write('não se aplica')  
+
+		with tab6:  
+			st.header("Probabilidades de Avanço")  
+			st.write(dados6) 
+
+if a == 'Fim das Quartas':
+		dados1 = pd.read_excel('dados/R5outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R2outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados3 = pd.read_excel('dados/R5outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R5outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
+		#dados5 = pd.read_excel('dados/R3outputTabelaJogosPROBS.xlsx', index_col=0) 
+		dados6 = pd.read_excel('dados/R5outputAvançoPorEtapa.xlsx', index_col=0) 
+
+		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
+ 
+		with tab1:
+			st.header("Simulações da Copa") 
+			st.write(dados1, height = 1200)
+
+		with tab2:  
+			st.header("Previsões do Artilheiro")  
+			st.write("Em Breve")
+
+		with tab3:  
+			st.header("Finais Mais Prováveis")  
+			st.write(dados3) 
+
+		with tab4:  
+			st.header("Probabilidades por Etapa")  
+			st.write(dados4) 
+
+		with tab5:  
+			st.header("Tabela de Jogos")  
+			st.write('não se aplica')  
 
 		with tab6:  
 			st.header("Probabilidades de Avanço")  
