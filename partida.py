@@ -241,7 +241,7 @@ if pagina == 'Principal':
 
 if pagina == 'Tabelas': 
 
-	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada', 'Fim da Primeira Rodada','Fim das Oitavas', 'Fim das Quartas']
+	atualizacoes = ['Início da Copa', 'Pós Primeira Rodada', 'Pós Segunda Rodada', 'Oitavas de Final','Quartas de Final', 'Semifinais', 'Final']
 	a = st.radio('Selecione a Atualização', atualizacoes, index = 5)
 
 	if a == 'Início da Copa':
@@ -256,11 +256,11 @@ if pagina == 'Tabelas':
 
 		with tab0:
 			st.header("Dados das Seleções") 
-			st.write(dados0, height = 900)
+			st.write(dados0)
 
 		with tab1:
 			st.header("Simulações da Copa") 
-			st.write(dados1, height = 900)
+			st.write(dados1)
 
 		with tab2:  
 			st.header("Previsões do Artilheiro")  
@@ -290,7 +290,7 @@ if pagina == 'Tabelas':
  
 		with tab1:
 			st.header("Simulações da Copa") 
-			st.write(dados1, height = 900)
+			st.write(dados1)
 
 		with tab2:  
 			st.header("Previsões do Artilheiro")  
@@ -326,7 +326,7 @@ if pagina == 'Tabelas':
  
 		with tab1:
 			st.header("Simulações da Copa") 
-			st.write(dados1, height = 900)
+			st.write(dados1)
 
 		with tab2:  
 			st.header("Previsões do Artilheiro")  
@@ -350,19 +350,18 @@ if pagina == 'Tabelas':
 
 
 
-	if a == 'Fim da Primeira Rodada':
+	if a == 'Oitavas de Final':
 		dados1 = pd.read_excel('dados/R3outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
-		dados2 = pd.read_excel('dados/R2outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R3outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
 		dados3 = pd.read_excel('dados/R3outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
-		dados4 = pd.read_excel('dados/R3outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
-		#dados5 = pd.read_excel('dados/R3outputTabelaJogosPROBS.xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R3outputProbPorEtapa(n=1000000).xlsx', index_col=0)  
 		dados6 = pd.read_excel('dados/R3outputAvançoPorEtapa.xlsx', index_col=0) 
 
-		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
+		tab1, tab2, tab3, tab4, tab5 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Probabilidades de Avanço'])
  
 		with tab1:
 			st.header("Simulações da Copa") 
-			st.write(dados1, height = 1200)
+			st.write(dados1)
 
 		with tab2:  
 			st.header("Previsões do Artilheiro")  
@@ -374,33 +373,28 @@ if pagina == 'Tabelas':
 
 		with tab4:  
 			st.header("Probabilidades por Etapa")  
-			st.write(dados4) 
+			st.write(dados4)  
 
 		with tab5:  
-			st.header("Tabela de Jogos")  
-			st.write('não se aplica')  
-
-		with tab6:  
 			st.header("Probabilidades de Avanço")  
 			st.write(dados6) 
 
-if a == 'Fim das Oitavas':
+if a == 'Quartas de Final':
 		dados1 = pd.read_excel('dados/R4outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
-		dados2 = pd.read_excel('dados/R2outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R4outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
 		dados3 = pd.read_excel('dados/R4outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
-		dados4 = pd.read_excel('dados/R4outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
-		#dados5 = pd.read_excel('dados/R3outputTabelaJogosPROBS.xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R4outputProbPorEtapa(n=1000000).xlsx', index_col=0)  
 		dados6 = pd.read_excel('dados/R4outputAvançoPorEtapa.xlsx', index_col=0) 
 
-		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
+		tab1, tab2, tab3, tab4, tab5 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa','Probabilidades de Avanço'])
  
 		with tab1:
 			st.header("Simulações da Copa") 
-			st.write(dados1, height = 1200)
+			st.write(dados1)
 
 		with tab2:  
 			st.header("Previsões do Artilheiro")  
-			st.write("Em Breve")
+			st.write(dados2) 
 
 		with tab3:  
 			st.header("Finais Mais Prováveis")  
@@ -411,30 +405,25 @@ if a == 'Fim das Oitavas':
 			st.write(dados4) 
 
 		with tab5:  
-			st.header("Tabela de Jogos")  
-			st.write('não se aplica')  
-
-		with tab6:  
 			st.header("Probabilidades de Avanço")  
 			st.write(dados6) 
 
-if a == 'Fim das Quartas':
+if a == 'Semifinais':
 		dados1 = pd.read_excel('dados/R5outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
-		dados2 = pd.read_excel('dados/R2outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R5outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
 		dados3 = pd.read_excel('dados/R5outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
-		dados4 = pd.read_excel('dados/R5outputProbPorEtapa(n=1000000).xlsx', index_col=0) 
-		#dados5 = pd.read_excel('dados/R3outputTabelaJogosPROBS.xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R5outputProbPorEtapa(n=1000000).xlsx', index_col=0)  
 		dados6 = pd.read_excel('dados/R5outputAvançoPorEtapa.xlsx', index_col=0) 
 
-		tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Tabela de Jogos','Probabilidades de Avanço'])
+		tab1, tab2, tab3, tab4, tab5 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa', 'Probabilidades de Avanço'])
  
 		with tab1:
 			st.header("Simulações da Copa") 
-			st.write(dados1, height = 1200)
+			st.write(dados1)
 
 		with tab2:  
 			st.header("Previsões do Artilheiro")  
-			st.write("Em Breve")
+			st.write(dados2) 
 
 		with tab3:  
 			st.header("Finais Mais Prováveis")  
@@ -442,12 +431,39 @@ if a == 'Fim das Quartas':
 
 		with tab4:  
 			st.header("Probabilidades por Etapa")  
-			st.write(dados4) 
+			st.write(dados4)  
 
 		with tab5:  
-			st.header("Tabela de Jogos")  
-			st.write('não se aplica')  
+			st.header("Probabilidades de Avanço")  
+			st.write(dados6) 
 
-		with tab6:  
+
+
+if a == 'Final':
+		dados1 = pd.read_excel('dados/R6outputSimulaçõesCopa(n=1000000).xlsx', index_col=0) 
+		dados2 = pd.read_excel('dados/R5outputJogadoresArtilharia(n=1000000).xlsx', index_col=0) 
+		dados3 = pd.read_excel('dados/R6outputFinaisMaisProvaveis(n=1000000).xlsx', index_col=0) 
+		dados4 = pd.read_excel('dados/R6outputProbPorEtapa(n=1000000).xlsx', index_col=0)  
+		dados6 = pd.read_excel('dados/R6outputAvançoPorEtapa.xlsx', index_col=0) 
+
+		tab1, tab2, tab3, tab4, tab5 = st.tabs(["Simulações da Copa", 'Artilharia', "Finais Mais Prováveis",  'Probabilidades por Etapa','Probabilidades de Avanço'])
+ 
+		with tab1:
+			st.header("Simulações da Copa") 
+			st.write(dados1)
+
+		with tab2:  
+			st.header("Previsões do Artilheiro")  
+			st.write(dados2) 
+
+		with tab3:  
+			st.header("Finais Mais Prováveis")  
+			st.write(dados3) 
+
+		with tab4:  
+			st.header("Probabilidades por Etapa")  
+			st.write(dados4)  
+
+		with tab5:  
 			st.header("Probabilidades de Avanço")  
 			st.write(dados6) 
